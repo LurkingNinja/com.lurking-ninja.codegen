@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace LurkingNinja.CodeGen.Editor
 {
-    internal static class AssetPostProcessorHelper
+    public static class AssetPostProcessorHelper
     {
         private static string GetFullPath(string fileName, string path) =>
             $"{Application.dataPath}/../{path}{fileName}.cs";
@@ -36,10 +36,10 @@ namespace LurkingNinja.CodeGen.Editor
         private static string GetFileName(string fileName) =>
             Path.GetFileNameWithoutExtension(fileName).Replace(" ", "_");
 
-        internal static void DeleteFile(string fileName, string path) =>
+        public static void DeleteFile(string fileName, string path) =>
             AssetDatabase.DeleteAsset(GetPath(GetFileName(fileName), path));
 
-        internal static void WriteFile(string fileName, string path, string content)
+        public static void WriteFile(string fileName, string path, string content)
         {
             fileName = GetFileName(fileName);
             var genPath = GetFullPath(fileName, path);
