@@ -1,11 +1,12 @@
 ﻿# Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.0.1] - 2023-08-11
+[HOME](./README.md) | CHANGELOG | [LICENSE](./LICENSE)
+## [1.0.2] - 2024-01-01
 ### Added
-- 
-### Removed
-- 
+- Usage and basic documentation.
+
+## [1.0.1] - 2023-08-11
 ### Changed
 - Typo in package name fixed.
 - Callback signatures fixed.

@@ -1,4 +1,11 @@
-﻿using System;
+﻿/***
+ * Codegen - Support package for other Codegen packages.
+ * Copyright (c) 2022-2024 Lurking Ninja.
+ *
+ * MIT License
+ * https://github.com/LurkingNinja/com.lurking-ninja.codegen
+ */
+using System;
 using System.IO;
 using System.Linq;
 using UnityEditor;
