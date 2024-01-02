@@ -4,7 +4,10 @@
   "version": "1.0.2",
   "unity": "2021.3",
   "description": "Helper package to run code generation in Unity projects.",
-  "documentationUrl": "https://github.com/LurkingNinja/com.lurking-ninja.codegen/blob/main/README.md",
+  "documentationUrl": "https://github.com/LurkingNinja/com.lurking-ninja.codegen",
+  "changelogUrl": "https://github.com/LurkingNinja/com.lurking-ninja.codegen/blob/main/CHANGELOG.md",
+  "license": "MIT",
+  "licensesUrl": "https://github.com/LurkingNinja/com.lurking-ninja.codegen/blob/main/LICENSE",
   "author": {
     "name": "Lurking Ninja",
     "email": "dev@lurking-ninja.com",
