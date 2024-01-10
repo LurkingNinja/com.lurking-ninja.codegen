@@ -1,9 +1,9 @@
 {
-  "name": "com.lurkingninja.codegen",
-  "displayName": "Lurking Ninja CodeGen",
+  "name": "com.lurking-ninja.codegen",
+  "displayName": "Lurking Ninja Codegen",
+  "description": "Helper package to run code generation in Unity projects.",
   "version": "1.0.2",
   "unity": "2021.3",
-  "description": "Helper package to run code generation in Unity projects.",
   "documentationUrl": "https://github.com/LurkingNinja/com.lurking-ninja.codegen",
   "changelogUrl": "https://github.com/LurkingNinja/com.lurking-ninja.codegen/blob/main/CHANGELOG.md",
   "license": "MIT",
@@ -12,8 +12,5 @@
     "name": "Lurking Ninja",
     "email": "dev@lurking-ninja.com",
     "url": "https://lurking-ninja.com/"
-  },
-  "unityRelease": "14f1",
-  "type": "library",
-  "dependencies": {}
+  }
 }
