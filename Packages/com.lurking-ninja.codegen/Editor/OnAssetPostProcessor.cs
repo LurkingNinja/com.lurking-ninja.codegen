@@ -1,82 +1,83 @@
 ﻿/***
- * Codegen - Support package for other Codegen packages.
+ * Lurking Ninja CodeGen
  * Copyright (c) 2022-2024 Lurking Ninja.
  *
  * MIT License
  * https://github.com/LurkingNinja/com.lurking-ninja.codegen
  */
-using System;
-using System.Collections.Generic;
-using UnityEditor;
-using Object = UnityEngine.Object;
-
 namespace LurkingNinja.CodeGen.Editor
 {
+    using System;
+    using System.Collections.Generic;
+    using UnityEditor;
+    using Object = UnityEngine.Object;
+
+    public struct OnProcess
+    {
+        public Object Target;
+        public string Path;
+    }
+    
     public class OnAssetPostProcessor : AssetPostprocessor
     {
-        private static readonly Dictionary<Type, List<Action<Object, string>>> _changeCallbacks = new();
-        internal static readonly Dictionary<Type, List<Action<Object, string>>> DeleteCallbacks = new();
+        private static readonly Dictionary<Type, List<Action<OnProcess>>> _CHANGE_CALLBACKS = new();
+        internal static readonly Dictionary<Type, List<Action<OnProcess>>> DELETE_CALLBACKS = new();
 
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
             string[] movedAssets, string[] movedFromAssetPaths)
         {
             foreach (var path in importedAssets)
             {
-                foreach (var keyValue in _changeCallbacks)
+                foreach (var keyValue in _CHANGE_CALLBACKS)
                 {
                     var asset = AssetDatabase.LoadAssetAtPath(path, keyValue.Key);
                     if (asset is null) continue;
 
-                    foreach (var action in keyValue.Value) 
-                        action?.Invoke(asset, path);
+                    var callback = new OnProcess { Target = asset, Path = path };
+                    
+                    foreach (var action in keyValue.Value) action?.Invoke(callback);
                 }
             }
         }
 
-        public static void AddListener(
-            Type key, Action<Object, string> changeCallback, Action<Object, string> deleteCallback)
+        public static void Add(Type key, Action<OnProcess> changeCallback, Action<OnProcess> deleteCallback)
         {
-            AddChangeListener(key, changeCallback);
-            AddDeletionListener(key, deleteCallback);
+            AddChange(key, changeCallback);
+            AddDeletion(key, deleteCallback);
         }
 
-        public static void RemoveListener(
-            Type key, Action<Object, string> changeCallback, Action<Object, string> deleteCallback)
+        public static void Remove(Type key, Action<OnProcess> changeCallback, Action<OnProcess> deleteCallback)
         {
-            RemoveChangeListener(key, changeCallback);
-            RemoveDeletionListener(key, deleteCallback);
+            RemoveChange(key, changeCallback);
+            RemoveDeletion(key, deleteCallback);
         }
-        
-        public static void AddChangeListener(Type key, Action<Object, string> callback)
+
+        private static void AddChange(Type key, Action<OnProcess> callback)
         {
-            if (!_changeCallbacks.ContainsKey(key))
-                _changeCallbacks[key] = new List<Action<Object, string>>();
-            if (_changeCallbacks[key].Contains(callback)) return;
+            if (!_CHANGE_CALLBACKS.ContainsKey(key)) _CHANGE_CALLBACKS[key] = new List<Action<OnProcess>>();
+            if (_CHANGE_CALLBACKS[key].Contains(callback)) return;
             
-            _changeCallbacks[key].Add(callback);
+            _CHANGE_CALLBACKS[key].Add(callback);
         }
 
-        public static void RemoveChangeListener(Type key, Action<Object, string> callback)
+        private static void RemoveChange(Type key, Action<OnProcess> callback)
         {
-            if (!_changeCallbacks.ContainsKey(key)) return;
-
-            _changeCallbacks[key].Remove(callback);
+            if (_CHANGE_CALLBACKS.TryGetValue(key, out var changeCallback))
+                changeCallback.Remove(callback);
         }
 
-        public static void AddDeletionListener(Type key, Action<Object, string> callback)
+        private static void AddDeletion(Type key, Action<OnProcess> callback)
         {
-            if (!DeleteCallbacks.ContainsKey(key))
-                DeleteCallbacks[key] = new List<Action<Object, string>>();
-            if (DeleteCallbacks[key].Contains(callback)) return;
+            if (!DELETE_CALLBACKS.ContainsKey(key)) DELETE_CALLBACKS[key] = new List<Action<OnProcess>>();
+            if (DELETE_CALLBACKS[key].Contains(callback)) return;
 
-            DeleteCallbacks[key].Add(callback);
+            DELETE_CALLBACKS[key].Add(callback);
         }
 
-        public static void RemoveDeletionListener(Type key, Action<Object, string> callback)
+        private static void RemoveDeletion(Type key, Action<OnProcess> callback)
         {
-            if (!DeleteCallbacks.ContainsKey(key)) return;
-
-            DeleteCallbacks[key].Remove(callback);
+            if (DELETE_CALLBACKS.TryGetValue(key, out var deleteCallback))
+                deleteCallback.Remove(callback);
         }
     }
 
@@ -85,13 +86,14 @@ namespace LurkingNinja.CodeGen.Editor
     {
         private static AssetDeleteResult OnWillDeleteAsset(string path, RemoveAssetOptions rao)
         {
-            foreach (var keyValue in OnAssetPostProcessor.DeleteCallbacks)
+            foreach (var keyValue in OnAssetPostProcessor.DELETE_CALLBACKS)
             {
                 var asset = AssetDatabase.LoadAssetAtPath(path, keyValue.Key);
                 if (asset is null) continue;
 
-                foreach (var action in keyValue.Value)
-                    action?.Invoke(asset, path);
+                var callback = new OnProcess { Target = asset, Path = path };
+                
+                foreach (var action in keyValue.Value) action?.Invoke(callback);
             }
 
             return AssetDeleteResult.DidNotDelete;

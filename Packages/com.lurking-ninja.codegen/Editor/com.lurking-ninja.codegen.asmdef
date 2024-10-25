@@ -1,7 +1,13 @@
 {
     "name": "com.lurking-ninja.codegen",
     "rootNamespace": "LurkingNinja.CodeGen",
-    "references": [],
+    "references": [
+        "GUID:eec0964c48f6f4e40bc3ec2257ccf8c5",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:2e77701fe0ceda44fb763f03ee704c37",
+        "GUID:478a2357cc57436488a56e564b08d223",
+        "GUID:84651a3751eca9349aac36a66bba901b"
+    ],
     "includePlatforms": [
         "Editor"
     ],
@@ -11,6 +17,27 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.localization",
+            "expression": "",
+            "define": "LN_LOCALIZATION"
+        },
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "",
+            "define": "LN_INPUT_SYSTEM"
+        },
+        {
+            "name": "com.unity.modules.uielements",
+            "expression": "",
+            "define": "LN_UI_TOOLKIT"
+        },
+        {
+            "name": "com.unity.editorcoroutines",
+            "expression": "",
+            "define": "LN_EDITOR_COROUTINES"
+        }
+    ],
     "noEngineReferences": false
 }

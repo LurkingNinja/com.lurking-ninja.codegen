@@ -1,7 +1,14 @@
 ﻿# Changelog
 All notable changes to this project will be documented in this file.
 
-[HOME](./README.md) | CHANGELOG | [LICENSE](./LICENSE)
+## [2.0.0] - 2024-09-24
+### Added
+- Project Settings settings handling
+- Localization CodeGen
+### Todo
+- Build Scenes CodeGen
+- Ui Toolkit CodeGen
+
 ## [1.0.2] - 2024-01-01
 ### Added
 - Usage and basic documentation.
