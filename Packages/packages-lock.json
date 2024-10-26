@@ -6,6 +6,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.lurking-ninja.csharp-templates": {
+      "version": "file:D:/Packages/C# Templates/Packages/com.lurking-ninja.csharp-templates",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.addressables": {
       "version": "1.22.2",
       "depth": 1,

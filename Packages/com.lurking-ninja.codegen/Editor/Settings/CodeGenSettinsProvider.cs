@@ -13,7 +13,7 @@ namespace LurkingNinja.CodeGen.Editor
 
     public partial class CodeGenSettingsProvider : SettingsProvider
     {
-        private const string _SETTINGS_PATH = "Project/Lurking Ninja CodeGen";
+        private const string _SETTINGS_PATH = "Project/Lurking Ninja/CodeGen";
 
         private SerializedObject _serializedSettings;
         private SerializedProperty _autoRun;
